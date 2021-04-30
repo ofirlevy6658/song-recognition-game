@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import api from "./API/api";
 
+import "./css/app.css";
+
 const App = () => {
 	const [player, setPlayer] = useState(new Audio());
+	const [startGame, setStartGame] = useState(false);
 	const [songs, setSongs] = useState([]);
 	useEffect(() => {
 		const fetchSongs = async () => {
@@ -13,6 +16,7 @@ const App = () => {
 	}, []);
 
 	const clickHandler = () => {
+		setStartGame(true);
 		const newPlayer = player;
 		console.log(songs);
 		newPlayer.src = songs;
@@ -22,9 +26,11 @@ const App = () => {
 
 	return (
 		<>
-			<h1>
-				<button onClick={clickHandler}>Start</button>
-			</h1>
+			{!startGame && (
+				<div className="menu">
+					<button onClick={clickHandler}>Start</button>
+				</div>
+			)}
 		</>
 	);
 };
