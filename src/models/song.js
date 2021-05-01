@@ -4,6 +4,7 @@ const Song = mongoose.model("Pop", {
 	name: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 	genere: {
 		type: String,
@@ -12,6 +13,7 @@ const Song = mongoose.model("Pop", {
 	file: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 });
 

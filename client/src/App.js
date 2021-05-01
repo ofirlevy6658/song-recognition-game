@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import api from "./API/api";
 
+import Menu from "./Menu";
+import Spinner from "./Spinner";
+import Answer from "./Answer";
 import "./css/app.css";
+import countDown from "./countdown.mp3";
 
 const App = () => {
 	const [player, setPlayer] = useState(new Audio());
-	const [startGame, setStartGame] = useState(false);
+	const [showMenu, setShowMenu] = useState(false);
 	const [songs, setSongs] = useState([]);
 	useEffect(() => {
 		const fetchSongs = async () => {
@@ -15,22 +19,26 @@ const App = () => {
 		fetchSongs();
 	}, []);
 
-	const clickHandler = () => {
-		setStartGame(true);
-		const newPlayer = player;
+	// menu
+	const handleClick = () => {
+		setShowMenu(true);
+		let newPlayer = player;
 		console.log(songs);
-		newPlayer.src = songs;
-		setPlayer(newPlayer);
-		player.play();
+		newPlayer.src = countDown;
+		newPlayer = setPlayer(countDown);
+		// player.play();
+	};
+
+	//answers
+	const handleAnswers = () => {
+		console.log("answer");
 	};
 
 	return (
 		<>
-			{!startGame && (
-				<div className="menu">
-					<button onClick={clickHandler}>Start</button>
-				</div>
-			)}
+			{!showMenu && <Menu handleClick={handleClick} />}
+			{/* {showMenu && <Spinner />} */}
+			{showMenu && <Answer handleAnswers={handleAnswers} />}
 		</>
 	);
 };

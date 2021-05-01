@@ -1,0 +1,14 @@
+.menu{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+
+}
+
+.menu-selector{
+    display: block;
+    width: 100px;
+    margin: 2px;
+}
