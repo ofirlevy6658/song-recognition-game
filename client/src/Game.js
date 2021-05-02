@@ -4,13 +4,14 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const Game = ({ songs, songsName }) => {
 	const [currentSong, setCurrentSong] = useState();
-	const [answers, setAnswers] = useState("a", "b", "c", "d");
-	const [audio, setAudio] = useState(new Audio());
+	const [answers, setAnswers] = useState();
+	const [player, setPlayer] = useState(new Audio());
+	const [countAnswer, setCountAnswer] = useState(0);
 
 	useEffect(() => {
 		console.log("in use effect");
 		random();
-	}, []);
+	}, [countAnswer]);
 
 	const random = () => {
 		const selectedSong = songs[Math.floor(Math.random() * songs.length)];
@@ -19,6 +20,18 @@ const Game = ({ songs, songsName }) => {
 		answers.push(selectedSong.name);
 		shuffle(answers);
 		setAnswers(answers);
+		// playSong();
+		const newPlayer = player;
+		newPlayer.src = selectedSong.file;
+		setPlayer(newPlayer);
+		player.play();
+	};
+
+	const playSong = () => {
+		const player = new Audio();
+		console.log(currentSong);
+		player.src = currentSong.file;
+		// player.play();
 	};
 
 	const randomAnswers = () => {
@@ -35,45 +48,13 @@ const Game = ({ songs, songsName }) => {
 			[array[i], array[j]] = [array[j], array[i]];
 		}
 	}
-	// useEffect(() => {
-	// 	if (!currentSong) return setCurrentSong(getRandomSong());
-	// 	console.log("song updated -> get answers", currentSong);
-	// 	setAnswers(getRandomAnswers());
-	// }, [currentSong]);
 
-	// useEffect(() => {
-	// 	console.log("got answers -> rerender");
-	// }, [answers]);
-
-	function getRandomAnswers() {
-		const tempSongNames = songsName.filter(
-			(song) => song.name !== currentSong.name
-		);
-		console.log(tempSongNames);
-		const correctAnswerIdx = Math.random() * 4;
-
-		const randomAnswers = [];
-		for (let i = 0; i < 4; i++) {
-			if (i === correctAnswerIdx) {
-				randomAnswers.push(currentSong.name);
-			} else {
-				randomAnswers.push(
-					tempSongNames[Math.floor(Math.random() * tempSongNames.length)]
-				);
-			}
+	const handleAnswers = (e) => {
+		console.log(countAnswer);
+		if (currentSong.name === e.target.innerHTML) {
+			player.pause();
+			setCountAnswer(countAnswer + 1);
 		}
-
-		console.log(randomAnswers);
-
-		return randomAnswers;
-	}
-
-	function getRandomSong() {
-		return songs[Math.floor(Math.random() * songs.length)];
-	}
-
-	const handleAnswers = () => {
-		console.log(currentSong);
 	};
 
 	return (
