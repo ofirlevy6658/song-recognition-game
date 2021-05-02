@@ -1,24 +1,27 @@
-import React from "react";
+import { set } from "mongoose";
+// import { useEffect, useState } from "react";
+// import api from "./API/api";
 
 import "./css/answer.css";
-const Answer = ({ handleAnswers }) => {
+
+const Answer = ({ handleAnswers, answers }) => {
 	return (
 		<div className="container">
 			<div className="answers">
 				<div className="upper-answers">
 					<div className="a1" onClick={handleAnswers}>
-						a1
+						{answers[0]}
 					</div>
 					<div className="a2" onClick={handleAnswers}>
-						a2
+						{answers[1]}
 					</div>
 				</div>
 				<div className="lower-answers">
 					<div className="a3" onClick={handleAnswers}>
-						a3
+						{answers[2]}
 					</div>
 					<div className="a4" onClick={handleAnswers}>
-						a4
+						{answers[3]}
 					</div>
 				</div>
 			</div>
