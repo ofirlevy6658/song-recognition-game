@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Answer from "./Answer";
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const Game = ({ songs, songsName }) => {
 	const [currentSong, setCurrentSong] = useState();
@@ -9,29 +8,21 @@ const Game = ({ songs, songsName }) => {
 	const [countAnswer, setCountAnswer] = useState(0);
 
 	useEffect(() => {
-		console.log("in use effect");
-		random();
+		startGame();
 	}, [countAnswer]);
 
-	const random = () => {
+	const startGame = () => {
 		const selectedSong = songs[Math.floor(Math.random() * songs.length)];
 		setCurrentSong(selectedSong);
 		const answers = randomAnswers();
 		answers.push(selectedSong.name);
 		shuffle(answers);
 		setAnswers(answers);
-		// playSong();
 		const newPlayer = player;
+		player.volume = 0.45;
 		newPlayer.src = selectedSong.file;
 		setPlayer(newPlayer);
 		player.play();
-	};
-
-	const playSong = () => {
-		const player = new Audio();
-		console.log(currentSong);
-		player.src = currentSong.file;
-		// player.play();
 	};
 
 	const randomAnswers = () => {
@@ -59,7 +50,6 @@ const Game = ({ songs, songsName }) => {
 
 	return (
 		<>
-			(SONG: {currentSong?.name})
 			{answers && (
 				<Answer
 					answers={[answers[0], answers[1], answers[2], answers[3]]}
