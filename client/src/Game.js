@@ -2,19 +2,28 @@ import { useEffect, useState } from "react";
 import Answer from "./Answer";
 import correctSound from "./correct.mp3";
 import incorrect from "./incorrect.mp3";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
+import "./css/game.css";
 const Game = ({ songs, songsName }) => {
 	const [currentSong, setCurrentSong] = useState();
 	const [answers, setAnswers] = useState();
 	const [player, setPlayer] = useState(new Audio());
 	const [countAnswer, setCountAnswer] = useState(0);
-	const [timer, setTimer] = useState(15);
+	const [timer, setTimer] = useState(10);
 	const [score, setScore] = useState(0);
+	let tic;
 
 	useEffect(() => {
 		startGame();
 	}, [countAnswer]);
+
+	useEffect(() => {
+		if (timer !== 0) {
+			tic = setTimeout(() => {
+				setTimer(timer - 1);
+			}, 1000);
+		} else incorrectAnswer();
+	}, [timer]);
 
 	const startGame = () => {
 		const selectedSong = songs[Math.floor(Math.random() * songs.length)];
@@ -46,6 +55,7 @@ const Game = ({ songs, songsName }) => {
 	}
 
 	const handleAnswers = (e) => {
+		clearTimeout(tic);
 		player.pause();
 		if (currentSong.name === e.target.innerHTML) {
 			correntAnswer();
@@ -56,14 +66,13 @@ const Game = ({ songs, songsName }) => {
 
 	const correntAnswer = () => {
 		setScore(timer);
-		console.log(score);
 		const newPlayer = player;
 		newPlayer.src = correctSound;
 		setPlayer(newPlayer);
 		player.play();
 		setTimeout(() => {
-			console.log("This will run after 1 second!");
 			setCountAnswer(countAnswer + 1);
+			setTimer(10);
 		}, 2000);
 	};
 	const incorrectAnswer = () => {
@@ -72,35 +81,25 @@ const Game = ({ songs, songsName }) => {
 		setPlayer(newPlayer);
 		player.play();
 		setTimeout(() => {
-			console.log("This will run after 1 second!");
 			setCountAnswer(countAnswer + 1);
+			setTimer(10);
 		}, 2000);
+	};
+	const endTurns = () => {
+		console.log(score);
+		console.log(answers);
 	};
 
 	return (
-		<>
-			<CountdownCircleTimer
-				isPlaying
-				duration={15}
-				colors={[
-					["#004777", 0.33],
-					["#F7B801", 0.33],
-					["#A30000", 0.33],
-				]}
-			>
-				{({ remainingTime }) => {
-					console.log(remainingTime);
-					setTimer(remainingTime);
-					return remainingTime;
-				}}
-			</CountdownCircleTimer>
+		<div className="game-board">
+			<h1 className="time">{timer}</h1>
 			{answers && (
 				<Answer
 					answers={[answers[0], answers[1], answers[2], answers[3]]}
 					handleAnswers={handleAnswers}
 				/>
 			)}
-		</>
+		</div>
 	);
 };
 
