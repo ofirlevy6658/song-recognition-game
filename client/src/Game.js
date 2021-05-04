@@ -14,7 +14,8 @@ const Game = ({ songs, songsName }) => {
 	let tic;
 
 	useEffect(() => {
-		startGame();
+		if (countAnswer === 5) endTurns();
+		else startGame();
 	}, [countAnswer]);
 
 	useEffect(() => {
@@ -65,7 +66,7 @@ const Game = ({ songs, songsName }) => {
 	};
 
 	const correntAnswer = () => {
-		setScore(timer);
+		setScore(score + timer);
 		const newPlayer = player;
 		newPlayer.src = correctSound;
 		setPlayer(newPlayer);
@@ -76,6 +77,7 @@ const Game = ({ songs, songsName }) => {
 		}, 2000);
 	};
 	const incorrectAnswer = () => {
+		console.log(countAnswer);
 		const newPlayer = player;
 		newPlayer.src = incorrect;
 		setPlayer(newPlayer);
@@ -87,7 +89,8 @@ const Game = ({ songs, songsName }) => {
 	};
 	const endTurns = () => {
 		console.log(score);
-		console.log(answers);
+		console.log(countAnswer);
+		// setAnswers(null);
 	};
 
 	return (
