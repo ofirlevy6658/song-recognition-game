@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import api from "./API/api";
 
 import Menu from "./Menu";
-// import Spinner from "./Spinner";
-import "./css/app.css";
-// import countDown from "./countdown.mp3";
 import Game from "./Game";
+import Login from "./Login";
+import "./css/app.css";
 
 const App = () => {
+	const [isLoggedin, setIsLogged] = useState(false);
 	const [showMenu, setShowMenu] = useState(false);
 	const [songs, setSongs] = useState([]);
 	const [songsName, setSongsName] = useState([]);
@@ -19,6 +19,7 @@ const App = () => {
 			setSongs(data);
 			setSongsName(data.map((el) => el.name));
 		};
+		console.log(localStorage);
 		fetchSongs();
 	}, [collection]);
 
@@ -28,10 +29,10 @@ const App = () => {
 
 	return (
 		<>
-			{!showMenu && <Menu handleClick={handleClick} />}
-			{/* {showMenu && <Spinner />} */}
+			{!isLoggedin && <Login handleLogin={handleLogin} />}
+			{/* {!showMenu && <Menu handleClick={handleClick} />} */}
+			{/* {showMenu && <Game songs={songs} songsName={songsName} />} */}
 			{/* {showMenu && <Answer handleAnswers={handleAnswers} answers={answers} />} */}
-			{showMenu && <Game songs={songs} songsName={songsName} />}
 		</>
 	);
 };
