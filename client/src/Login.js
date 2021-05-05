@@ -6,6 +6,7 @@ const Login = () => {
 	const [singupActive, setSingupActive] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [name, setName] = useState("");
 	const [worngCredentials, setWorngCredentials] = useState("");
 	const signupBtn = useRef(null);
 
@@ -16,11 +17,33 @@ const Login = () => {
 				password,
 				email,
 			});
-			localStorage.setItem("user", data);
+			localStorage.setItem("token", data.user.tokens[0].token);
 		} catch (e) {
 			setWorngCredentials("bad credentials");
 		}
 	};
+
+	const register = async (e) => {
+		e.preventDefault();
+		try {
+			const { data } = await api.post("/users", {
+				name,
+				password,
+				email,
+			});
+			localStorage.setItem("token", data.user.tokens[0].token);
+		} catch (e) {
+			console.log(e.response.data); // some reason error message
+			const error = e.response.data;
+			if (error.includes("password"))
+				setWorngCredentials("Weak password, minimum 7 digits");
+			else if (error.includes("Email is invalid"))
+				setWorngCredentials("Email is invalid");
+			else if (error.includes("email_1 dup key"))
+				setWorngCredentials("Email already used");
+		}
+	};
+
 	return (
 		<div>
 			<div
@@ -31,11 +54,23 @@ const Login = () => {
 				<div className="form-container sign-up-container">
 					<form>
 						<h1>Create Account</h1>
-						<div className="social-container"></div>
-						<input type="text" placeholder="Name" />
-						<input type="email" placeholder="Email" />
-						<input type="password" placeholder="Password" />
-						<button>Sign Up</button>
+						<input
+							onChange={(e) => setName(e.currentTarget.value)}
+							type="text"
+							placeholder="Name"
+						/>
+						<input
+							onChange={(e) => setEmail(e.currentTarget.value)}
+							type="email"
+							placeholder="Email"
+						/>
+						<input
+							onChange={(e) => setPassword(e.currentTarget.value)}
+							type="password"
+							placeholder="Password"
+						/>
+						<button onClick={register}>Sign Up</button>
+						<h4 className="wrong-register">{worngCredentials}</h4>
 					</form>
 				</div>
 				<div className="form-container sign-in-container">
@@ -65,7 +100,10 @@ const Login = () => {
 							<button
 								className="ghost"
 								id="signIn"
-								onClick={() => setSingupActive("")}
+								onClick={() => {
+									setSingupActive("");
+									setWorngCredentials("");
+								}}
 							>
 								Sign In
 							</button>
@@ -76,7 +114,10 @@ const Login = () => {
 							<button
 								className="ghost"
 								id="signUp"
-								onClick={() => setSingupActive("right-panel-active")}
+								onClick={() => {
+									setSingupActive("right-panel-active");
+									setWorngCredentials("");
+								}}
 							>
 								Sign Up
 							</button>
