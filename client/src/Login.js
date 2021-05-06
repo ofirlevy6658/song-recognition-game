@@ -18,6 +18,7 @@ const Login = () => {
 				email,
 			});
 			localStorage.setItem("token", data.user.tokens[0].token);
+			window.location.reload(false);
 		} catch (e) {
 			setWorngCredentials("bad credentials");
 		}
@@ -32,6 +33,7 @@ const Login = () => {
 				email,
 			});
 			localStorage.setItem("token", data.user.tokens[0].token);
+			window.location.reload(false);
 		} catch (e) {
 			console.log(e.response.data); // some reason error message
 			const error = e.response.data;

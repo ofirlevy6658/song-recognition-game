@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
 import api from "./API/api";
 
 import Menu from "./Menu";
@@ -8,8 +7,8 @@ import Login from "./Login";
 import "./css/app.css";
 
 const App = () => {
-	const [userToken, setUserToken] = useState(null);
-	const [userIsLogged, setUserIsLogged] = useState(false);
+	const [user, setUser] = useState(null);
+	const [token] = useState(localStorage.getItem("token"));
 	const [showMenu, setShowMenu] = useState(false);
 	const [songs, setSongs] = useState([]);
 	const [songsName, setSongsName] = useState([]);
@@ -26,10 +25,19 @@ const App = () => {
 
 	//check if user logged in
 	useEffect(() => {
-		const loggedInUser = localStorage.getItem("token");
-		if (loggedInUser) {
-			setUserToken(loggedInUser);
-			setUserIsLogged(true);
+		const fetchUser = async () => {
+			try {
+				const { data } = await api("/users/me", {
+					headers: { Authorization: `Bearer ${token}` },
+				});
+
+				setUser(data);
+			} catch (e) {
+				console.log(e.response);
+			}
+		};
+		if (token) {
+			fetchUser();
 		}
 	}, []);
 
@@ -39,9 +47,9 @@ const App = () => {
 
 	return (
 		<>
-			{!userIsLogged && <Login />}
-			{userIsLogged && !showMenu && <Menu handleClick={handleClick} />}
-			{userIsLogged && showMenu && <Game songs={songs} songsName={songsName} />}
+			{!token && <Login />}
+			{token && !showMenu && <Menu handleClick={handleClick} />}
+			{token && showMenu && <Game songs={songs} songsName={songsName} />}
 			{/* {showMenu && <Answer handleAnswers={handleAnswers} answers={answers} />} */}
 		</>
 	);
