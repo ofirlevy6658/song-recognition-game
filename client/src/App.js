@@ -3,11 +3,13 @@ import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 
 import Menu from "./Menu";
 import Game from "./Game";
+import navbar from "./Navbar";
 import Scoreboard from "./Scoreboard";
 import LoginReal from "./LoginReal";
 import api from "./API/api";
 import Genre from "./Genre";
 import "./css/app.css";
+import Navbar from "./Navbar";
 
 const App = () => {
 	const [user, setUser] = useState(null);
@@ -29,11 +31,12 @@ const App = () => {
 		if (token) {
 			fetchUser();
 		}
-	}, []);
+	}, [token]);
 
 	return (
 		<>
 			<BrowserRouter>
+				<Navbar />
 				<Switch>
 					<Route exact path="/">
 						{token ? <Redirect to="/menu" /> : <LoginReal />}

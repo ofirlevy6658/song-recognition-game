@@ -18,7 +18,6 @@ const Game = ({ genre }) => {
 	const [score, setScore] = useState(0);
 	const history = useHistory();
 	let tic;
-
 	useEffect(() => {
 		const fetchSongs = async () => {
 			player.volume = 0.45;
@@ -29,7 +28,7 @@ const Game = ({ genre }) => {
 			setSongsName(await data.map((el) => el.name));
 		};
 		fetchSongs();
-	}, []);
+	}, [genre, player]);
 
 	useEffect(() => {
 		if (countAnswer === 6) {
@@ -38,7 +37,7 @@ const Game = ({ genre }) => {
 			if (!countAnswer) return;
 			startGame();
 		}
-	}, [countAnswer]);
+	}, [countAnswer, history]);
 
 	useEffect(() => {
 		if (timer !== 0) {

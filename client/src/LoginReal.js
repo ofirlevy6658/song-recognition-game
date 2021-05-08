@@ -20,7 +20,8 @@ const LoginReal = () => {
 				email,
 			});
 			localStorage.setItem("token", data.user.tokens[0].token);
-			// history.push("/menu");
+			history.push("/menu");
+			history.go(0);
 		} catch (e) {
 			setWorngCredentials("bad credentials");
 		}
@@ -35,8 +36,8 @@ const LoginReal = () => {
 				email,
 			});
 			localStorage.setItem("token", data.user.tokens[0].token);
-			// window.location.reload(false);
 			history.push("/menu");
+			history.go(0);
 		} catch (e) {
 			console.log(e.response.data); // some reason error message
 			const error = e.response.data;
