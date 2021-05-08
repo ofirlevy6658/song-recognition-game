@@ -21,6 +21,7 @@ const App = () => {
 					headers: { Authorization: `Bearer ${token}` },
 				});
 				setUser(data);
+				console.log(data);
 			} catch (e) {
 				console.log(e.response);
 			}
@@ -44,7 +45,7 @@ const App = () => {
 						<Scoreboard />
 					</Route>
 					<Route path="/Genre" exact>
-						<Genre />
+						{user && <Genre user={user} />}
 					</Route>
 					<Route path="/game" exact>
 						{user && <Game genre={user.genre} />}

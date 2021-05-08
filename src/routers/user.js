@@ -26,6 +26,18 @@ router.patch("/api/users", auth, async (req, res) => {
 		res.status(400).send(e.message);
 	}
 });
+//change genre
+router.patch("/api/genre", auth, async (req, res) => {
+	try {
+		const { id, genre } = req.body;
+		user = await User.findById(id);
+		user.genre = genre;
+		user.save();
+		res.status(201).send("genre update");
+	} catch (e) {
+		res.status(400).send(e.message);
+	}
+});
 
 //get user info
 router.get("/api/users/me", auth, (req, res) => {
