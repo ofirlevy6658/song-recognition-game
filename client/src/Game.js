@@ -1,21 +1,43 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import api from "./API/api";
 import Answer from "./Answer";
 import correctSound from "./correct.mp3";
 import incorrect from "./incorrect.mp3";
+import countDown from "./countdown2.mp3";
 
 import "./css/game.css";
-const Game = ({ songs, songsName }) => {
+const Game = ({ genre }) => {
+	const [songs, setSongs] = useState([]);
+	const [songsName, setSongsName] = useState(null);
 	const [currentSong, setCurrentSong] = useState();
 	const [answers, setAnswers] = useState();
-	const [player, setPlayer] = useState(new Audio());
+	const [player, setPlayer] = useState(new Audio(countDown));
 	const [countAnswer, setCountAnswer] = useState(0);
-	const [timer, setTimer] = useState(10);
+	const [timer, setTimer] = useState(5);
 	const [score, setScore] = useState(0);
+	const history = useHistory();
 	let tic;
 
 	useEffect(() => {
-		if (countAnswer === 5) endTurns();
-		else startGame();
+		const fetchSongs = async () => {
+			player.volume = 0.45;
+			player.play();
+			const { data } = await api(`/song?genere=${genre}`);
+			console.log(data);
+			setSongs(await data);
+			setSongsName(await data.map((el) => el.name));
+		};
+		fetchSongs();
+	}, []);
+
+	useEffect(() => {
+		if (countAnswer === 6) {
+			history.push("/scoreboard", [score]);
+		} else {
+			if (!countAnswer) return;
+			startGame();
+		}
 	}, [countAnswer]);
 
 	useEffect(() => {
@@ -23,7 +45,13 @@ const Game = ({ songs, songsName }) => {
 			tic = setTimeout(() => {
 				setTimer(timer - 1);
 			}, 1000);
-		} else incorrectAnswer();
+		} else {
+			if (!countAnswer) {
+				setCountAnswer(countAnswer + 1);
+				return;
+			}
+			incorrectAnswer();
+		}
 	}, [timer]);
 
 	const startGame = () => {
@@ -31,10 +59,11 @@ const Game = ({ songs, songsName }) => {
 		setCurrentSong(selectedSong);
 		const answers = randomAnswers();
 		answers.push(selectedSong.name);
+		console.log(selectedSong.name);
 		shuffle(answers);
 		setAnswers(answers);
 		const newPlayer = player;
-		player.volume = 0.15;
+		player.volume = 0.35;
 		newPlayer.src = selectedSong.file;
 		setPlayer(newPlayer);
 		player.play();
@@ -66,6 +95,7 @@ const Game = ({ songs, songsName }) => {
 	};
 
 	const correntAnswer = () => {
+		console.log(score);
 		setScore(score + timer);
 		const newPlayer = player;
 		newPlayer.src = correctSound;
@@ -74,7 +104,7 @@ const Game = ({ songs, songsName }) => {
 		setTimeout(() => {
 			setCountAnswer(countAnswer + 1);
 			setTimer(10);
-		}, 2000);
+		}, 1500);
 	};
 	const incorrectAnswer = () => {
 		console.log(countAnswer);
@@ -85,12 +115,7 @@ const Game = ({ songs, songsName }) => {
 		setTimeout(() => {
 			setCountAnswer(countAnswer + 1);
 			setTimer(10);
-		}, 2000);
-	};
-	const endTurns = () => {
-		console.log(score);
-		console.log(countAnswer);
-		// setAnswers(null);
+		}, 1500);
 	};
 
 	return (

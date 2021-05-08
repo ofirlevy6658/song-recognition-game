@@ -37,6 +37,12 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		default: 0,
 	},
+	genre: {
+		type: String,
+		required: true,
+		default: "rock classics",
+	},
+
 	tokens: [
 		{
 			token: {

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const Song = mongoose.model("Pop", {
+const Song = mongoose.model("Song", {
 	name: {
 		type: String,
 		required: true,

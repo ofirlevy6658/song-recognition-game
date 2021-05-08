@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./css/login.css";
 import api from "./API/api";
 
-const Login = () => {
+const LoginReal = () => {
 	const [singupActive, setSingupActive] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -11,6 +11,7 @@ const Login = () => {
 	const [worngCredentials, setWorngCredentials] = useState("");
 	const signupBtn = useRef(null);
 	const history = useHistory();
+
 	const login = async (e) => {
 		e.preventDefault();
 		try {
@@ -19,11 +20,12 @@ const Login = () => {
 				email,
 			});
 			localStorage.setItem("token", data.user.tokens[0].token);
-			window.location.reload(false);
+			// history.push("/menu");
 		} catch (e) {
 			setWorngCredentials("bad credentials");
 		}
 	};
+
 	const register = async (e) => {
 		e.preventDefault();
 		try {
@@ -33,7 +35,8 @@ const Login = () => {
 				email,
 			});
 			localStorage.setItem("token", data.user.tokens[0].token);
-			window.location.reload(false);
+			// window.location.reload(false);
+			history.push("/menu");
 		} catch (e) {
 			console.log(e.response.data); // some reason error message
 			const error = e.response.data;
@@ -131,4 +134,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default LoginReal;
