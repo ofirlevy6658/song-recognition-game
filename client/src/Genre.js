@@ -1,26 +1,24 @@
-import { useState } from "react";
 import api from "./API/api";
 import { useHistory } from "react-router-dom";
 import "./css/genre.css";
 
-const Genre = ({ user }) => {
-	// const [active, setActive] = useState("");
-	const [seleced, setSelect] = useState("rock classics");
+const Genre = ({ user, handleGenre }) => {
 	const genres = ["rock classics", "hip hop"];
 	const history = useHistory();
-	const handleSave = async () => {
+
+	const handleSave = async (genre) => {
 		const token = user.tokens[0].token;
 		const config = {
 			headers: { Authorization: `Bearer ${token}` },
 		};
 		const bodyParameters = {
-			genre: seleced,
+			genre,
 			id: user._id,
 		};
 		try {
 			await api.patch("/genre", bodyParameters, config);
+			await handleGenre(genre);
 			history.push("/");
-			history.go(0);
 		} catch (e) {
 			console.log(e);
 		}
@@ -30,21 +28,14 @@ const Genre = ({ user }) => {
 			<div key={genre}>
 				<button
 					className="btn btn-outline-dark genre-btn"
-					onClick={() => setSelect(genre)}
+					onClick={() => handleSave(genre)}
 				>
 					{genre}
 				</button>
 			</div>
 		);
 	});
-	return (
-		<>
-			{renderGenres}
-			<button className="btn btn-success  genre-btn" onClick={handleSave}>
-				save
-			</button>
-		</>
-	);
+	return <>{renderGenres}</>;
 };
 
 export default Genre;

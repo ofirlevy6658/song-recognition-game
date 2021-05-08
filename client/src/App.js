@@ -3,20 +3,21 @@ import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 
 import Menu from "./Menu";
 import Game from "./Game";
-import navbar from "./Navbar";
+import Navbar from "./Navbar";
 import Scoreboard from "./Scoreboard";
 import LoginReal from "./LoginReal";
 import api from "./API/api";
 import Genre from "./Genre";
 import "./css/app.css";
-import Navbar from "./Navbar";
 
 const App = () => {
 	const [user, setUser] = useState(null);
+	const [genre, setGenre] = useState("");
 	const [token] = useState(localStorage.getItem("token"));
 
 	//check if user logged in
 	useEffect(() => {
+		console.log("in");
 		const fetchUser = async () => {
 			try {
 				const { data } = await api("/users/me", {
@@ -31,12 +32,15 @@ const App = () => {
 		if (token) {
 			fetchUser();
 		}
-	}, [token]);
+	}, [token, genre]);
 
+	const handleGenre = async (newGenre) => {
+		setGenre(await newGenre);
+	};
 	return (
 		<>
 			<BrowserRouter>
-				<Navbar />
+				{user && <Navbar />}
 				<Switch>
 					<Route exact path="/">
 						{token ? <Redirect to="/menu" /> : <LoginReal />}
@@ -48,7 +52,7 @@ const App = () => {
 						<Scoreboard />
 					</Route>
 					<Route path="/Genre" exact>
-						{user && <Genre user={user} />}
+						{user && <Genre user={user} handleGenre={handleGenre} />}
 					</Route>
 					<Route path="/game" exact>
 						{user && <Game genre={user.genre} />}
