@@ -6,12 +6,12 @@ import Game from "./Game";
 import Scoreboard from "./Scoreboard";
 import LoginReal from "./LoginReal";
 import api from "./API/api";
+import Genre from "./Genre";
 import "./css/app.css";
 
 const App = () => {
 	const [user, setUser] = useState(null);
 	const [token] = useState(localStorage.getItem("token"));
-	const [genre, setGenre] = useState("");
 
 	//check if user logged in
 	useEffect(() => {
@@ -43,21 +43,23 @@ const App = () => {
 					<Route path="/scoreboard" exact>
 						<Scoreboard />
 					</Route>
-					{/* <Route
-					exact
-					path="/"
-					component={() => (token ? null : <LoginReal />)}
-				/> */}
-					{/* 
-				<Route path="/" exact>
-				<LoginReal />
-			</Route> */}
-
+					<Route path="/Genre" exact>
+						<Genre />
+					</Route>
 					<Route path="/game" exact>
 						{user && <Game genre={user.genre} />}
 					</Route>
 				</Switch>
 			</BrowserRouter>
+			{/* <Route
+					exact
+					path="/"
+					component={() => (token ? null : <LoginReal />)}
+				/> */}
+			{/* 
+				<Route path="/" exact>
+				<LoginReal />
+			</Route> */}
 			{/* {!token && <Login />} */}
 			{/* {token && !showMenu && <Menu handleClick={handleClick} />} */}
 			{/* {token && showMenu && <Game songs={songs} songsName={songsName} />} */}

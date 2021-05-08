@@ -5,8 +5,6 @@
     align-items: center;
 }
 .answers{
-    
-    background-color: #c3c3c3;
     display: flex;   
     flex-direction: column;
 }
@@ -20,8 +18,10 @@
     
 }
 
-.a1,.a2,.a3,.a4{
-    background-color: darkturquoise;
+.a1,.a2,.a3,.a4{ 
+    font-size: 13px;
+    height:75px;
     padding: 10px 20px;
+    width: 200px;
 }
 
