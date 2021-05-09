@@ -37,6 +37,14 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		default: 0,
 	},
+	bestScore: {
+		type: {},
+		required: true,
+		default: {
+			"rock classics": 0,
+			"hip hop": 0,
+		},
+	},
 	genre: {
 		type: String,
 		required: true,
@@ -55,11 +63,9 @@ const userSchema = new mongoose.Schema({
 
 //delete
 userSchema.methods.toJSON = function () {
-	console.log("test");
 	const user = this;
 	const userObject = user.toObject();
 	delete userObject.password;
-
 	return userObject;
 };
 

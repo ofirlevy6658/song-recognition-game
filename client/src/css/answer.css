@@ -12,9 +12,9 @@
 .upper-answers,
 .lower-answers{
     display: flex;
-    width: 50vw;
+    width: 100%;
     justify-content: space-around;
-    margin: 15px;
+    
     
 }
 
@@ -23,5 +23,6 @@
     height:75px;
     padding: 10px 20px;
     width: 200px;
+    margin: 25px;
 }
 

@@ -26,6 +26,19 @@ router.patch("/api/users", auth, async (req, res) => {
 		res.status(400).send(e.message);
 	}
 });
+router.patch("/api/bestscore", auth, async (req, res) => {
+	try {
+		const { id, genre, score } = req.body;
+		user = await User.findById(id);
+		bestScore = { ...user.bestScore };
+		bestScore[genre] = parseInt(score);
+		user.bestScore = bestScore;
+		user.save();
+		res.status(201).send("score update");
+	} catch (e) {
+		res.status(400).send(e.message);
+	}
+});
 //change genre
 router.patch("/api/genre", auth, async (req, res) => {
 	try {
@@ -59,8 +72,6 @@ router.post("/api/users/login", async (req, res) => {
 
 router.post("/api/users/logout", auth, async (req, res) => {
 	try {
-		console.log("logout");
-		console.log(req.user.tokens);
 		req.user.tokens = req.user.tokens.filter((token) => {
 			return token.token !== req.token;
 		});

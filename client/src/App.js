@@ -1,62 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Menu from "./Menu";
 import Game from "./Game";
 import Navbar from "./Navbar";
 import Scoreboard from "./Scoreboard";
 import LoginReal from "./LoginReal";
-import api from "./API/api";
 import Genre from "./Genre";
 import "./css/app.css";
 
 const App = () => {
 	const [user, setUser] = useState(null);
-	const [genre, setGenre] = useState("");
-	const [token] = useState(localStorage.getItem("token"));
-
-	//check if user logged in
-	useEffect(() => {
-		console.log("in");
-		const fetchUser = async () => {
-			try {
-				const { data } = await api("/users/me", {
-					headers: { Authorization: `Bearer ${token}` },
-				});
-				setUser(data);
-				console.log(data);
-			} catch (e) {
-				console.log(e.response);
-			}
-		};
-		if (token) {
-			fetchUser();
-		}
-	}, [token, genre]);
-
-	const handleGenre = async (newGenre) => {
-		setGenre(await newGenre);
+	const getUser = (user) => {
+		setUser(user);
 	};
 	return (
 		<>
 			<BrowserRouter>
-				{user && <Navbar />}
+				{user && <Navbar user={user} />}
 				<Switch>
-					<Route exact path="/">
-						{token ? <Redirect to="/menu" /> : <LoginReal />}
+					<Route path="/" exact>
+						<LoginReal />
 					</Route>
-					<Route exact path="/menu">
-						{token ? <Menu /> : <Redirect to="/" />}
+					<Route path="/menu" exact>
+						<Menu getUser={getUser} />
 					</Route>
 					<Route path="/scoreboard" exact>
-						<Scoreboard />
+						{user && <Scoreboard user={user} />}
 					</Route>
-					<Route path="/Genre" exact>
-						{user && <Genre user={user} handleGenre={handleGenre} />}
+					<Route path="/genre" exact>
+						{user && <Genre user={user} />}
 					</Route>
 					<Route path="/game" exact>
 						{user && <Game genre={user.genre} />}
 					</Route>
+
+					{/* <Route exact path="/">
+						{token ? <Redirect to="/menu" /> : <LoginReal />}
+					</Route>
+					<Route exact path="/menu">
+						{token ? <Menu /> : <Redirect to="/" />}
+					</Route> */}
+					{/* <Route path="/" exact>
+						{token ? <Menu /> : <LoginReal />}
+					</Route> */}
 				</Switch>
 			</BrowserRouter>
 			{/* <Route

@@ -1,6 +1,7 @@
 .game-board{
     display: flex;
-    flex-direction: column;
+    flex-direction:column;
+    justify-content: center;
     align-items: center;
-    align-content: space-around;
+    height: 65vh;
 }

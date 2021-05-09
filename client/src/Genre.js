@@ -2,7 +2,7 @@ import api from "./API/api";
 import { useHistory } from "react-router-dom";
 import "./css/genre.css";
 
-const Genre = ({ user, handleGenre }) => {
+const Genre = ({ user }) => {
 	const genres = ["rock classics", "hip hop"];
 	const history = useHistory();
 
@@ -17,8 +17,7 @@ const Genre = ({ user, handleGenre }) => {
 		};
 		try {
 			await api.patch("/genre", bodyParameters, config);
-			await handleGenre(genre);
-			history.push("/");
+			history.push("/menu");
 		} catch (e) {
 			console.log(e);
 		}
@@ -35,7 +34,7 @@ const Genre = ({ user, handleGenre }) => {
 			</div>
 		);
 	});
-	return <>{renderGenres}</>;
+	return <div className="genre-btns">{renderGenres}</div>;
 };
 
 export default Genre;
