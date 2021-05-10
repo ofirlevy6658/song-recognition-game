@@ -1,4 +1,4 @@
-import api from "./API/api";
+import api from "../API/api";
 import { useHistory } from "react-router-dom";
 import "./css/genre.css";
 

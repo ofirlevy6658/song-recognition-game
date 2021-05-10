@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import "./css/menu.css";
 import { useHistory } from "react-router-dom";
-import api from "./API/api";
+import api from "../API/api";
+import "./css/menu.css";
 
 const Menu = ({ getUser }) => {
 	const [token] = useState(localStorage.getItem("token"));

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import api from "../API/api";
 import "./css/login.css";
-import api from "./API/api";
 
 const LoginReal = () => {
 	const [singupActive, setSingupActive] = useState("");

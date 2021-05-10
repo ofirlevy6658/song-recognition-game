@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import api from "./API/api";
-import { useHistory } from "react-router-dom";
 
 const Logout = () => {
 	const [token] = useState(localStorage.getItem("token"));

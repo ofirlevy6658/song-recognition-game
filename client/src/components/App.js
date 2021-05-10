@@ -19,12 +19,6 @@ const App = () => {
 			<BrowserRouter>
 				{user && <Navbar user={user} />}
 				<Switch>
-					{/* <Route exact path="/">
-						{localStorage.token ? <Redirect to="/menu" /> : <LoginReal />}
-					</Route>
-					<Route path="/menu" exact>
-						<Menu getUser={getUser} />
-					</Route> */}
 					<Route path="/" exact>
 						{localStorage.token ? <Menu getUser={getUser} /> : <LoginReal />}
 					</Route>
@@ -37,31 +31,8 @@ const App = () => {
 					<Route path="/game" exact>
 						{user && <Game genre={user.genre} />}
 					</Route>
-
-					{/* <Route exact path="/">
-						{token ? <Redirect to="/menu" /> : <LoginReal />}
-					</Route>
-					<Route exact path="/menu">
-						{token ? <Menu /> : <Redirect to="/" />}
-					</Route> */}
-					{/* <Route path="/" exact>
-						{token ? <Menu /> : <LoginReal />}
-					</Route> */}
 				</Switch>
 			</BrowserRouter>
-			{/* <Route
-					exact
-					path="/"
-					component={() => (token ? null : <LoginReal />)}
-				/> */}
-			{/* 
-				<Route path="/" exact>
-				<LoginReal />
-			</Route> */}
-			{/* {!token && <Login />} */}
-			{/* {token && !showMenu && <Menu handleClick={handleClick} />} */}
-			{/* {token && showMenu && <Game songs={songs} songsName={songsName} />} */}
-			{/* {showMenu && <Answer handleAnswers={handleAnswers} answers={answers} />} */}
 		</>
 	);
 };

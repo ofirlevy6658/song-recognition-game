@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import "./css/navbar.css";
-import api from "./API/api";
+import { useState } from "react";
+import api from "../API/api";
 import { useHistory } from "react-router-dom";
+import "./css/navbar.css";
 
 const Navbar = ({ user }) => {
 	const [token] = useState(localStorage.getItem("token"));

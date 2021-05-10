@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import api from "./API/api";
+import api from "../API/api";
 import Answer from "./Answer";
-import correctSound from "./correct.mp3";
-import incorrect from "./incorrect.mp3";
-import countDown from "./countdown2.mp3";
-
+import correctSound from "../Audio/correct.mp3";
+import incorrect from "../Audio/incorrect.mp3";
+import countDown from "../Audio/countdown2.mp3";
 import "./css/game.css";
+
 const Game = ({ genre }) => {
 	const [songs, setSongs] = useState([]);
 	const [songsName, setSongsName] = useState(null);
@@ -35,6 +35,7 @@ const Game = ({ genre }) => {
 			history.push("/scoreboard", [score]);
 		} else {
 			if (!countAnswer) return;
+			console.log("im about the start");
 			startGame();
 		}
 	}, [countAnswer, history]);
@@ -45,7 +46,10 @@ const Game = ({ genre }) => {
 				setTimer(timer - 1);
 			}, 1000);
 		} else {
+			console.log("start here");
 			if (!countAnswer) {
+				console.log("im in");
+				setTimer(10);
 				setCountAnswer(countAnswer + 1);
 				return;
 			}
@@ -75,7 +79,6 @@ const Game = ({ genre }) => {
 			let r = Math.floor(Math.random() * songs.length);
 			if (randomUnique.indexOf(r) === -1) randomUnique.push(r);
 		}
-		console.log(randomUnique);
 		return [
 			songs[randomUnique[0]].name,
 			songs[randomUnique[1]].name,

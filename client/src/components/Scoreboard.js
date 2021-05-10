@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import api from "./API/api";
+import api from "../API/api";
 import { useLocation, useHistory } from "react-router-dom";
 
 const Scoreboard = ({ user }) => {
