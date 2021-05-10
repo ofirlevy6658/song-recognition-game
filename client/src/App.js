@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import Menu from "./Menu";
 import Game from "./Game";
@@ -13,14 +13,18 @@ const App = () => {
 	const [user, setUser] = useState(null);
 	const getUser = (user) => {
 		setUser(user);
+		console.log();
 	};
 	return (
 		<>
 			<BrowserRouter>
 				{user && <Navbar user={user} />}
 				<Switch>
-					<Route path="/" exact>
+					{/* <Route path="/" exact>
 						<LoginReal />
+					</Route> */}
+					<Route exact path="/">
+						{localStorage.token ? <Redirect to="/menu" /> : <LoginReal />}
 					</Route>
 					<Route path="/menu" exact>
 						<Menu getUser={getUser} />

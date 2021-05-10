@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import api from "./API/api";
 
 const Menu = ({ getUser }) => {
-	// const [, setUser] = useState(null);
 	const [token] = useState(localStorage.getItem("token"));
 
 	let history = useHistory();

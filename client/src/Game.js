@@ -18,13 +18,14 @@ const Game = ({ genre }) => {
 	const [score, setScore] = useState(0);
 	const history = useHistory();
 	let tic;
+
 	useEffect(() => {
 		const fetchSongs = async () => {
 			player.volume = 0.45;
 			player.play();
 			const { data } = await api(`/song?genere=${genre}`);
-			console.log(data);
 			setSongs(await data);
+			console.log(data);
 			setSongsName(await data.map((el) => el.name));
 		};
 		fetchSongs();
@@ -58,7 +59,6 @@ const Game = ({ genre }) => {
 		setCurrentSong(selectedSong);
 		const answers = randomAnswers();
 		answers.push(selectedSong.name);
-		console.log(selectedSong.name);
 		shuffle(answers);
 		setAnswers(answers);
 		const newPlayer = player;
@@ -94,7 +94,6 @@ const Game = ({ genre }) => {
 	};
 
 	const correntAnswer = () => {
-		console.log(score);
 		setScore(score + timer);
 		const newPlayer = player;
 		newPlayer.src = correctSound;
@@ -106,7 +105,6 @@ const Game = ({ genre }) => {
 		}, 1500);
 	};
 	const incorrectAnswer = () => {
-		console.log(countAnswer);
 		const newPlayer = player;
 		newPlayer.src = incorrect;
 		setPlayer(newPlayer);

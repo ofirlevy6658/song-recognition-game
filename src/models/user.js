@@ -43,6 +43,7 @@ const userSchema = new mongoose.Schema({
 		default: {
 			"rock classics": 0,
 			"hip hop": 0,
+			"timeless rock anthems": 0,
 		},
 	},
 	genre: {
@@ -50,7 +51,6 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		default: "rock classics",
 	},
-
 	tokens: [
 		{
 			token: {

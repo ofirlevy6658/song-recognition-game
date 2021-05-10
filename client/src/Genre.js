@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import "./css/genre.css";
 
 const Genre = ({ user }) => {
-	const genres = ["rock classics", "hip hop"];
+	const genres = ["rock classics", "hip hop", "timeless rock anthems"];
 	const history = useHistory();
 
 	const handleSave = async (genre) => {

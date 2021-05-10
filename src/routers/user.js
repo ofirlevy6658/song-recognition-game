@@ -82,7 +82,7 @@ router.post("/api/users/logout", auth, async (req, res) => {
 	}
 });
 
-router.post("/api/users/logoutAll", auth, async (req, res) => {
+router.post("/api/users/logoutall", auth, async (req, res) => {
 	try {
 		req.user.tokens = [];
 		await req.user.save();

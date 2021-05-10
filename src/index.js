@@ -21,11 +21,12 @@ app.listen(PORT, () => {
 //////////////////////////
 /////////////////////////
 //////////////////////
+
 const token =
-	"BQC66Uy95uCBS5sXmmKgy84KyjYG96V60aGlwseffhiNp02V6bbUCaAmMm7U7RNeIw0-_WiSFF3jGV-4-5E";
+	"BQB3_5qpje4D-7MzXQOzBdqJrOY30rfEsl3MLe1mcfSPx29L66oDs1fbZKcK73fmZNC4K8SyDYruwmysetI";
 const response2 = async () => {
 	const { data } = await axios(
-		`https://api.spotify.com/v1/playlists/7s17jTD83GgeKajAMogIen/tracks`,
+		`https://api.spotify.com/v1/playlists/3zVs85cbaznZsWHI1iqToi/tracks`,
 		{
 			method: "GET",
 			headers: {
@@ -34,15 +35,19 @@ const response2 = async () => {
 		}
 	);
 	const { items } = await data;
-	let a;
+	const arr = [];
 	for (let i = 0; i < items.length; i++) {
 		if (items[i].track.preview_url) {
-			new Song({
-				name: items[i].track.name,
-				genere: "hip hop",
-				file: items[i].track.preview_url,
-			}).save();
+			arr.push(
+				new Song({
+					name: items[i].track.name,
+					genere: "timeless rock anthems",
+					file: items[i].track.preview_url,
+				})
+			);
 		}
 	}
+	for (let i = 0; i < arr.length; i++) {
+		arr[i].save();
+	}
 };
-response2();

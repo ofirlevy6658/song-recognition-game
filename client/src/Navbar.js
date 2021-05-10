@@ -1,9 +1,30 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import "./css/navbar.css";
+import api from "./API/api";
+import { useHistory } from "react-router-dom";
 
 const Navbar = ({ user }) => {
-	console.log(user);
-
+	const [token] = useState(localStorage.getItem("token"));
+	const history = useHistory();
+	const logout = async () => {
+		console.log(token);
+		try {
+			await api.post(
+				"/users/logoutall",
+				{},
+				{
+					headers: { Authorization: `Bearer ${token}` },
+				}
+			);
+			localStorage.clear();
+			history.push("/");
+		} catch (e) {
+			console.log(e.response);
+		}
+		// history.push("/menu");
+		// history.push("/");
+		// console.log("done");
+	};
 	return (
 		<>
 			<ul className="nav justify-content-center">
@@ -16,6 +37,11 @@ const Navbar = ({ user }) => {
 				<li className="nav-item">
 					<p className="nav-link active">
 						Best Score: {user.bestScore[user.genre]}
+					</p>
+				</li>
+				<li id="log-out" className="nav-item">
+					<p className="nav-link active log-out" onClick={logout}>
+						Logout
 					</p>
 				</li>
 			</ul>
