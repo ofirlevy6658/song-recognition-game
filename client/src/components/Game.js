@@ -16,6 +16,8 @@ const Game = ({ genre }) => {
 	const [countAnswer, setCountAnswer] = useState(0);
 	const [timer, setTimer] = useState(5);
 	const [score, setScore] = useState(0);
+	const [disableBtn, setDisableBtn] = useState(true);
+
 	const history = useHistory();
 	let tic;
 
@@ -49,7 +51,7 @@ const Game = ({ genre }) => {
 			console.log("start here");
 			if (!countAnswer) {
 				console.log("im in");
-				setTimer(10);
+				setTimer(11);
 				setCountAnswer(countAnswer + 1);
 				return;
 			}
@@ -58,6 +60,9 @@ const Game = ({ genre }) => {
 	}, [timer]);
 
 	const startGame = () => {
+		setTimeout(() => {
+			setDisableBtn(false);
+		}, 1000);
 		const selectedSongIndex = Math.floor(Math.random() * songs.length);
 		const selectedSong = songs[selectedSongIndex];
 		songs.splice(selectedSongIndex, 1);
@@ -94,6 +99,7 @@ const Game = ({ genre }) => {
 	}
 
 	const handleAnswers = (e) => {
+		setDisableBtn(true);
 		clearTimeout(tic);
 		player.pause();
 		if (currentSong.name.toLowerCase() === e.target.innerText.toLowerCase()) {
@@ -111,7 +117,7 @@ const Game = ({ genre }) => {
 		player.play();
 		setTimeout(() => {
 			setCountAnswer(countAnswer + 1);
-			setTimer(10);
+			setTimer(11);
 		}, 1500);
 	};
 	const incorrectAnswer = () => {
@@ -121,7 +127,7 @@ const Game = ({ genre }) => {
 		player.play();
 		setTimeout(() => {
 			setCountAnswer(countAnswer + 1);
-			setTimer(10);
+			setTimer(11);
 		}, 1500);
 	};
 
@@ -130,6 +136,7 @@ const Game = ({ genre }) => {
 			<h1 className="time">{timer}</h1>
 			{answers && (
 				<Answer
+					btnState={disableBtn}
 					answers={[answers[0], answers[1], answers[2], answers[3]]}
 					handleAnswers={handleAnswers}
 				/>
