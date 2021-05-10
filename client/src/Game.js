@@ -25,7 +25,6 @@ const Game = ({ genre }) => {
 			player.play();
 			const { data } = await api(`/song?genere=${genre}`);
 			setSongs(await data);
-			console.log(data);
 			setSongsName(await data.map((el) => el.name));
 		};
 		fetchSongs();
@@ -55,7 +54,9 @@ const Game = ({ genre }) => {
 	}, [timer]);
 
 	const startGame = () => {
-		const selectedSong = songs[Math.floor(Math.random() * songs.length)];
+		const selectedSongIndex = Math.floor(Math.random() * songs.length);
+		const selectedSong = songs[selectedSongIndex];
+		songs.splice(selectedSongIndex, 1);
 		setCurrentSong(selectedSong);
 		const answers = randomAnswers();
 		answers.push(selectedSong.name);
@@ -69,10 +70,16 @@ const Game = ({ genre }) => {
 	};
 
 	const randomAnswers = () => {
+		const randomUnique = [];
+		while (randomUnique.length < 3) {
+			let r = Math.floor(Math.random() * songs.length);
+			if (randomUnique.indexOf(r) === -1) randomUnique.push(r);
+		}
+		console.log(randomUnique);
 		return [
-			songs[Math.floor(Math.random() * songsName.length)].name,
-			songs[Math.floor(Math.random() * songsName.length)].name,
-			songs[Math.floor(Math.random() * songsName.length)].name,
+			songs[randomUnique[0]].name,
+			songs[randomUnique[1]].name,
+			songs[randomUnique[2]].name,
 		];
 	};
 
@@ -86,7 +93,7 @@ const Game = ({ genre }) => {
 	const handleAnswers = (e) => {
 		clearTimeout(tic);
 		player.pause();
-		if (currentSong.name === e.target.innerHTML) {
+		if (currentSong.name.toLowerCase() === e.target.innerText.toLowerCase()) {
 			correntAnswer();
 		} else {
 			incorrectAnswer();
