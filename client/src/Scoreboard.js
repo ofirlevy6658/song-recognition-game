@@ -30,7 +30,7 @@ const Scoreboard = ({ user }) => {
 	return (
 		<>
 			<h1>Your Score is {location.state}</h1>
-			<button onClick={() => history.push("/menu")}>back</button>
+			<button onClick={() => history.push("/")}>back</button>
 		</>
 	);
 };

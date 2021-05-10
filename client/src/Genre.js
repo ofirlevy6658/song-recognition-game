@@ -17,7 +17,7 @@ const Genre = ({ user }) => {
 		};
 		try {
 			await api.patch("/genre", bodyParameters, config);
-			history.push("/menu");
+			history.push("/");
 		} catch (e) {
 			console.log(e);
 		}

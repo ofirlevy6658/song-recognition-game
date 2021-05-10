@@ -17,7 +17,7 @@ const Navbar = ({ user }) => {
 				}
 			);
 			localStorage.clear();
-			history.push("/");
+			history.go(0);
 		} catch (e) {
 			console.log(e.response);
 		}

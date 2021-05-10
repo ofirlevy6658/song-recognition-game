@@ -13,21 +13,20 @@ const App = () => {
 	const [user, setUser] = useState(null);
 	const getUser = (user) => {
 		setUser(user);
-		console.log();
 	};
 	return (
 		<>
 			<BrowserRouter>
 				{user && <Navbar user={user} />}
 				<Switch>
-					{/* <Route path="/" exact>
-						<LoginReal />
-					</Route> */}
-					<Route exact path="/">
+					{/* <Route exact path="/">
 						{localStorage.token ? <Redirect to="/menu" /> : <LoginReal />}
 					</Route>
 					<Route path="/menu" exact>
 						<Menu getUser={getUser} />
+					</Route> */}
+					<Route path="/" exact>
+						{localStorage.token ? <Menu getUser={getUser} /> : <LoginReal />}
 					</Route>
 					<Route path="/scoreboard" exact>
 						{user && <Scoreboard user={user} />}
