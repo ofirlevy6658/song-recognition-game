@@ -3,13 +3,15 @@ const express = require("express");
 // const Song = require("./models/song");
 
 const cors = require("cors");
-const songRouter = require("./routers/song");
-const userRouter = require("./routers/user");
+const songRouter = require("./src/routers/song");
+const userRouter = require("./src/routers/user");
 const path = require("path");
-require("./db/mongoose");
+require("./src/db/mongoose");
+
 const app = express();
 
 const publicDirectory = path.join(__dirname, "../client/build");
+console.log(publicDirectory);
 app.use(express.static(publicDirectory));
 app.use(cors());
 app.use(express.json());
