@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./css/answer.css";
 
 const Answer = ({ handleAnswers, answers }) => {
