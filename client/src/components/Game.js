@@ -99,6 +99,7 @@ const Game = ({ genre }) => {
 	}
 
 	const handleAnswers = (e) => {
+		console.log(e.target.className);
 		setDisableBtn(true);
 		clearTimeout(tic);
 		player.pause();
