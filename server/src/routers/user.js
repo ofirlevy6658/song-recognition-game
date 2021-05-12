@@ -57,6 +57,22 @@ router.get("/api/users/me", auth, (req, res) => {
 	res.send(req.user);
 });
 
+router.get("/api/leaderscore", async (req, res) => {
+	try {
+		const genres = ["rock classics", "hip hop", "timeless rock anthems"];
+		users = await User.find({});
+		constBestScore = [];
+		for (let i of genres) {
+			users.sort((a, b) => a.bestScore[i] - b.bestScore[i]);
+			constBestScore.push(users.slice(users.length - 5));
+		}
+		console.log(constBestScore[2]);
+		res.status(201).send(constBestScore);
+	} catch (e) {
+		res.status(400).send(e.message);
+	}
+});
+
 router.post("/api/users/login", async (req, res) => {
 	try {
 		const user = await User.findByCredentials(

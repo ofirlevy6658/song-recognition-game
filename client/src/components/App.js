@@ -7,6 +7,7 @@ import Navbar from "./Navbar";
 import Scoreboard from "./Scoreboard";
 import LoginReal from "./LoginReal";
 import Genre from "./Genre";
+import Leaderboard from "./Leaderboard";
 import "./css/app.css";
 
 const App = () => {
@@ -30,6 +31,9 @@ const App = () => {
 					</Route>
 					<Route path="/game" exact>
 						{user && <Game genre={user.genre} />}
+					</Route>
+					<Route path="/leaderboard" exact>
+						{<Leaderboard />}
 					</Route>
 				</Switch>
 			</BrowserRouter>

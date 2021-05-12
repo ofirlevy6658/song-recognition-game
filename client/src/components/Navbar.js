@@ -1,6 +1,6 @@
 import { useState } from "react";
 import api from "../API/api";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import "./css/navbar.css";
 
 const Navbar = ({ user }) => {
@@ -21,13 +21,17 @@ const Navbar = ({ user }) => {
 		} catch (e) {
 			console.log(e.response);
 		}
-		// history.push("/menu");
-		// history.push("/");
-		// console.log("done");
 	};
 	return (
 		<>
 			<ul className="nav justify-content-center">
+				<li>
+					<Link to="/" className="nav-item">
+						<p className="nav-link active" id="home">
+							Home
+						</p>
+					</Link>
+				</li>
 				<li className="nav-item">
 					<p className="nav-link active">Welcome {user.name}</p>
 				</li>

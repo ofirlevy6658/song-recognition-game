@@ -31,7 +31,12 @@ const Menu = ({ getUser }) => {
 			<button className="menu-selector" onClick={() => history.push("/genre")}>
 				Genre
 			</button>
-			<button className="menu-selector">Score Board</button>
+			<button
+				className="menu-selector"
+				onClick={() => history.push("/leaderboard")}
+			>
+				Leader board
+			</button>
 		</div>
 	);
 };

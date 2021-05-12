@@ -6,7 +6,16 @@
 /* .nav{
     justify-content: space-between !important
 } */
-
-@media screen and (max-width: 550px) {
-      
+#home{
+    cursor: pointer;
+    font-weight: bold;
+    
 }
+.nav-link{
+    cursor: default;
+    
+}
+
+/* @media screen and (max-width: 550px) {
+      
+} */
