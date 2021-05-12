@@ -1,7 +1,8 @@
 #log-out{
     /* position: absolute; */
     /* right:0px; */
-    cursor: pointer
+    cursor: pointer;
+    /* font-weight: bold; */
 }
 /* .nav{
     justify-content: space-between !important

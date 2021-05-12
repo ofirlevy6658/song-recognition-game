@@ -7,7 +7,6 @@ const Navbar = ({ user }) => {
 	const [token] = useState(localStorage.getItem("token"));
 	const history = useHistory();
 	const logout = async () => {
-		console.log(token);
 		try {
 			await api.post(
 				"/users/logoutall",
@@ -44,7 +43,7 @@ const Navbar = ({ user }) => {
 					</p>
 				</li>
 				<li id="log-out" className="nav-item">
-					<p className="nav-link active log-out" onClick={logout}>
+					<p className="nav-link active" id="log-out" onClick={logout}>
 						Logout
 					</p>
 				</li>

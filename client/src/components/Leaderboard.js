@@ -13,14 +13,13 @@ const Leaderboard = () => {
 		const fetchScore = async () => {
 			const { data } = await api("/leaderscore");
 			setScoreData(data);
-			console.log(data);
 		};
 		fetchScore();
 	}, []);
 
 	const renderTable = scoreData.map((user, index) => {
 		return (
-			<div className="table-container">
+			<div className="table-container" key={index}>
 				<h4>{genre[index]}</h4>
 				<table className="table table-striped">
 					<thead>

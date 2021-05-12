@@ -30,6 +30,10 @@ const Game = ({ genre }) => {
 			setSongsName(await data.map((el) => el.name));
 		};
 		fetchSongs();
+		// clean up function
+		return () => {
+			player.pause();
+		};
 	}, [genre, player]);
 
 	useEffect(() => {
@@ -37,7 +41,6 @@ const Game = ({ genre }) => {
 			history.push("/scoreboard", [score]);
 		} else {
 			if (!countAnswer) return;
-			console.log("im about the start");
 			startGame();
 		}
 	}, [countAnswer, history]);
@@ -48,9 +51,7 @@ const Game = ({ genre }) => {
 				setTimer(timer - 1);
 			}, 1000);
 		} else {
-			console.log("start here");
 			if (!countAnswer) {
-				console.log("im in");
 				setTimer(11);
 				setCountAnswer(countAnswer + 1);
 				return;
@@ -99,7 +100,6 @@ const Game = ({ genre }) => {
 	}
 
 	const handleAnswers = (e) => {
-		console.log(e.target.className);
 		setDisableBtn(true);
 		clearTimeout(tic);
 		player.pause();
