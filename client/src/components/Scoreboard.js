@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import api from "../API/api";
 import { useLocation, useHistory } from "react-router-dom";
-
+import "./css/scoreboard.css";
 const Scoreboard = ({ user }) => {
 	const location = useLocation();
 	const history = useHistory();
@@ -20,7 +20,6 @@ const Scoreboard = ({ user }) => {
 
 			try {
 				await api.patch("/bestscore", bodyParameters, config);
-				console.log("did");
 			} catch (e) {
 				console.log(e.response);
 			}
@@ -29,8 +28,10 @@ const Scoreboard = ({ user }) => {
 	}, []);
 	return (
 		<>
-			<h1>Your Score is {location.state}</h1>
-			<button onClick={() => history.push("/")}>back</button>
+			<div className="score">
+				<h1>Your Score is {location.state}</h1>
+				<button onClick={() => history.push("/")}>back</button>
+			</div>
 		</>
 	);
 };

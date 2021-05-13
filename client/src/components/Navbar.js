@@ -10,16 +10,16 @@ const Navbar = ({ user }) => {
 		try {
 			await api.post(
 				"/users/logoutall",
-				{},
+				{ token },
 				{
 					headers: { Authorization: `Bearer ${token}` },
 				}
 			);
-			localStorage.clear();
-			history.go(0);
 		} catch (e) {
 			console.log(e.response);
 		}
+		localStorage.clear();
+		history.go(0);
 	};
 	return (
 		<>
@@ -32,14 +32,16 @@ const Navbar = ({ user }) => {
 					</Link>
 				</li>
 				<li className="nav-item">
-					<p className="nav-link active">Welcome {user.name}</p>
+					<p className="nav-link active hide">
+						Welcome {user ? user.name : ""}
+					</p>
 				</li>
 				<li className="nav-item">
-					<p className="nav-link active">Genre: {user.genre}</p>
+					<p className="nav-link active hide">Genre: {user ? user.name : ""}</p>
 				</li>
 				<li className="nav-item">
 					<p className="nav-link active">
-						Best Score: {user.bestScore[user.genre]}
+						Best Score: {user ? user.bestScore[user.genre] : ""}
 					</p>
 				</li>
 				<li id="log-out" className="nav-item">

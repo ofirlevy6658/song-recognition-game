@@ -30,6 +30,7 @@ router.patch("/api/bestscore", auth, async (req, res) => {
 	try {
 		const { id, genre, score } = req.body;
 		if (score > 50) return;
+		א;
 		user = await User.findById(id);
 		bestScore = { ...user.bestScore };
 		bestScore[genre] = parseInt(score);
@@ -94,7 +95,7 @@ router.post("/api/users/login", async (req, res) => {
 router.post("/api/users/logout", auth, async (req, res) => {
 	try {
 		req.user.tokens = req.user.tokens.filter((token) => {
-			return token.token !== req.token;
+			return token.token !== req.body.token;
 		});
 		await req.user.save();
 		res.send();

@@ -14,6 +14,7 @@ const Logout = () => {
 				console.log(e);
 			}
 		};
+		logoutUser();
 		console.log("in log out");
 	});
 	return <></>;
