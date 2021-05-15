@@ -30,7 +30,6 @@ router.patch("/api/bestscore", auth, async (req, res) => {
 	try {
 		const { id, genre, score } = req.body;
 		if (score > 50) return;
-		א;
 		user = await User.findById(id);
 		bestScore = { ...user.bestScore };
 		bestScore[genre] = parseInt(score);
@@ -61,7 +60,12 @@ router.get("/api/users/me", auth, (req, res) => {
 
 router.get("/api/leaderscore", async (req, res) => {
 	try {
-		const genres = ["rock classics", "hip hop", "timeless rock anthems"];
+		const genres = [
+			"rock classics",
+			"hip hop",
+			"timeless rock anthems",
+			"‎90s Israeli Rock",
+		];
 		users = await User.find({});
 		const cleanUsers = users.map((el) => {
 			return { bestScore: el.bestScore, name: el.name };
@@ -73,6 +77,7 @@ router.get("/api/leaderscore", async (req, res) => {
 			});
 			constBestScore.push(cleanUsers.slice(cleanUsers.length - 5));
 		}
+		console.log(cleanUsers);
 		res.status(201).send(constBestScore);
 	} catch (e) {
 		res.status(400).send(e.message);

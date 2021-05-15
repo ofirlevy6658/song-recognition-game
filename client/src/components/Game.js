@@ -134,7 +134,7 @@ const Game = ({ genre }) => {
 
 	return (
 		<div className="game-board">
-			<h1 className="time">{timer}</h1>
+			<h1 className="time">{timer === 11 ? 10 : timer}</h1>
 			{answers && (
 				<Answer
 					btnState={disableBtn}

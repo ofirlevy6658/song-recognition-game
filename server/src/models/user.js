@@ -45,6 +45,7 @@ const userSchema = new mongoose.Schema({
 			"rock classics": 0,
 			"hip hop": 0,
 			"timeless rock anthems": 0,
+			"‎90s Israeli Rock": 0,
 		},
 	},
 	genre: {

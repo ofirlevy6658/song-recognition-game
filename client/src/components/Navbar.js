@@ -37,7 +37,9 @@ const Navbar = ({ user }) => {
 					</p>
 				</li>
 				<li className="nav-item">
-					<p className="nav-link active hide">Genre: {user ? user.name : ""}</p>
+					<p className="nav-link active hide">
+						Genre: {user ? user.genre : ""}
+					</p>
 				</li>
 				<li className="nav-item">
 					<p className="nav-link active">

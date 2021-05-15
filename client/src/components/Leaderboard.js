@@ -7,12 +7,14 @@ const Leaderboard = () => {
 		"rock classics",
 		"hip hop",
 		"timeless rock anthems",
+		"‎90s Israeli Rock",
 	]);
 
 	useEffect(() => {
 		const fetchScore = async () => {
 			const { data } = await api("/leaderscore");
 			setScoreData(data);
+			console.log(data);
 		};
 		fetchScore();
 	}, []);
