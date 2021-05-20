@@ -14,7 +14,6 @@ const Leaderboard = () => {
 		const fetchScore = async () => {
 			const { data } = await api("/leaderscore");
 			setScoreData(data);
-			console.log(data);
 		};
 		fetchScore();
 	}, []);

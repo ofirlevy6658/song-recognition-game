@@ -77,7 +77,7 @@ router.get("/api/leaderscore", async (req, res) => {
 			});
 			constBestScore.push(cleanUsers.slice(cleanUsers.length - 5));
 		}
-		console.log(cleanUsers);
+
 		res.status(201).send(constBestScore);
 	} catch (e) {
 		res.status(400).send(e.message);

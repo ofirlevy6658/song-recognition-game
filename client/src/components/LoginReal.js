@@ -38,7 +38,6 @@ const LoginReal = () => {
 			// history.push("/");
 			history.go(0);
 		} catch (e) {
-			console.log(e.response.data); // some reason error message
 			const error = e.response.data;
 			if (error.includes("password"))
 				setWorngCredentials("Weak password, minimum 7 digits");

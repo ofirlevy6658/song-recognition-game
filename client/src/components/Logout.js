@@ -9,7 +9,6 @@ const Logout = () => {
 				await api.post("/users/logoutAll", {
 					headers: { Authorization: `Bearer ${token}` },
 				});
-				console.log("work");
 			} catch (e) {
 				console.log(e);
 			}
