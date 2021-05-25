@@ -63,7 +63,7 @@ const userSchema = new mongoose.Schema({
 	],
 });
 
-//delete
+//prevent sending unnecessary data to the user
 userSchema.methods.toJSON = function () {
 	const user = this;
 	const userObject = user.toObject();
@@ -71,6 +71,7 @@ userSchema.methods.toJSON = function () {
 	return userObject;
 };
 
+//check credentials before login
 userSchema.statics.findByCredentials = async (email, password) => {
 	const user = await User.findOne({ email });
 	if (!user) {
@@ -82,7 +83,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 	}
 	return user;
 };
-
+//generate token after login
 userSchema.methods.generateAuthToken = async function () {
 	const user = this;
 	const token = jwt.sign({ _id: user._id.toString() }, process.env.SECRET_KEY);

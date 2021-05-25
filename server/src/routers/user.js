@@ -3,6 +3,7 @@ const User = require("../models/user");
 const router = new express.Router();
 const auth = require("../middleware/auth");
 
+//create user
 router.post("/api/users", async (req, res) => {
 	const user = new User(req.body);
 	try {
@@ -26,6 +27,8 @@ router.patch("/api/users", auth, async (req, res) => {
 		res.status(400).send(e.message);
 	}
 });
+
+// update best score
 router.patch("/api/bestscore", auth, async (req, res) => {
 	try {
 		const { id, genre, score } = req.body;
