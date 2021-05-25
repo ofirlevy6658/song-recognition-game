@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import api from "../API/api";
-import Answer from "./Answer";
+import Answer from "../components/Answer";
+
 import correctSound from "../Audio/correct.mp3";
 import incorrect from "../Audio/incorrect.mp3";
 import countDown from "../Audio/countdown2.mp3";
-import "./css/game.css";
+import "../styles/game.css";
 
 const Game = ({ genre }) => {
 	const [songs, setSongs] = useState([]);
-	const [songsName, setSongsName] = useState(null);
 	const [currentSong, setCurrentSong] = useState();
 	const [answers, setAnswers] = useState();
 	const [player, setPlayer] = useState(new Audio(countDown));
@@ -27,10 +27,9 @@ const Game = ({ genre }) => {
 			player.play();
 			const { data } = await api(`/song?genere=${genre}`);
 			setSongs(await data);
-			setSongsName(await data.map((el) => el.name));
 		};
 		fetchSongs();
-		// clean up function
+		// clean up function stop the music of the user return to home page while playing.
 		return () => {
 			player.pause();
 		};
@@ -104,13 +103,13 @@ const Game = ({ genre }) => {
 		clearTimeout(tic);
 		player.pause();
 		if (currentSong.name.toLowerCase() === e.target.innerText.toLowerCase()) {
-			correntAnswer();
+			correctAnswer();
 		} else {
 			incorrectAnswer();
 		}
 	};
 
-	const correntAnswer = () => {
+	const correctAnswer = () => {
 		setScore(score + timer);
 		const newPlayer = player;
 		newPlayer.src = correctSound;

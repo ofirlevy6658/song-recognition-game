@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import api from "../API/api";
-import "./css/menu.css";
+import "../styles/menu.css";
 
 const Menu = ({ getUser }) => {
 	const [token] = useState(localStorage.getItem("token"));
@@ -13,7 +13,6 @@ const Menu = ({ getUser }) => {
 				const { data } = await api("/users/me", {
 					headers: { Authorization: `Bearer ${token}` },
 				});
-				// setUser(data);
 				getUser(data);
 			} catch (e) {
 				console.log(e.response);

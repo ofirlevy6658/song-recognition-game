@@ -1,9 +1,9 @@
 import React from "react";
-import "./css/answer.css";
+import "../styles/answer.css";
 
 const Answer = ({ handleAnswers, answers, btnState }) => {
 	return (
-		<div className="containerr">
+		<div>
 			<div className="answers">
 				<div className="upper-answers ">
 					<button

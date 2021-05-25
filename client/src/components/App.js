@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import Menu from "./Menu";
-import Game from "./Game";
+import Menu from "../pages/Menu";
+import Game from "../pages/Game";
 import Navbar from "./Navbar";
-import Scoreboard from "./Scoreboard";
-import LoginReal from "./LoginReal";
-import Genre from "./Genre";
-import Leaderboard from "./Leaderboard";
-import "./css/app.css";
+import ScoreBoard from "../pages/ScoreBoard";
+import Login from "../pages/Login";
+import Genre from "../pages/Genre";
+import LeaderBoard from "../pages/LeaderBoard";
+import "../styles/app.css";
 
 const App = () => {
 	const [user, setUser] = useState(null);
+
+	//after login the function called and set the user data
 	const getUser = (user) => {
 		setUser(user);
 	};
@@ -21,10 +23,10 @@ const App = () => {
 				{user && <Navbar user={user} />}
 				<Switch>
 					<Route path="/" exact>
-						{localStorage.token ? <Menu getUser={getUser} /> : <LoginReal />}
+						{localStorage.token ? <Menu getUser={getUser} /> : <Login />}
 					</Route>
 					<Route path="/scoreboard" exact>
-						{user && <Scoreboard user={user} />}
+						{user && <ScoreBoard user={user} />}
 					</Route>
 					<Route path="/genre" exact>
 						{user && <Genre user={user} />}
@@ -33,7 +35,7 @@ const App = () => {
 						{user && <Game genre={user.genre} />}
 					</Route>
 					<Route path="/leaderboard" exact>
-						{<Leaderboard />}
+						{<LeaderBoard />}
 					</Route>
 				</Switch>
 			</BrowserRouter>

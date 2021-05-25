@@ -1,6 +1,6 @@
 import api from "../API/api";
 import { useHistory } from "react-router-dom";
-import "./css/genre.css";
+import "../styles/genre.css";
 
 const Genre = ({ user }) => {
 	const genres = [

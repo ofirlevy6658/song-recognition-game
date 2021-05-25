@@ -1,14 +1,14 @@
 import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import api from "../API/api";
-import "./css/login.css";
+import "../styles/login.css";
 
-const LoginReal = () => {
-	const [singupActive, setSingupActive] = useState("");
+const Login = () => {
+	const [signupActive, setSignupActive] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [name, setName] = useState("");
-	const [worngCredentials, setWorngCredentials] = useState("");
+	const [wrongCredentials, setWrongCredentials] = useState("");
 	const signupBtn = useRef(null);
 	const history = useHistory();
 
@@ -22,7 +22,7 @@ const LoginReal = () => {
 			localStorage.setItem("token", data.user.tokens[0].token);
 			history.go(0);
 		} catch (e) {
-			setWorngCredentials("bad credentials");
+			setWrongCredentials("bad credentials");
 		}
 	};
 
@@ -35,16 +35,15 @@ const LoginReal = () => {
 				email,
 			});
 			localStorage.setItem("token", data.user.tokens[0].token);
-			// history.push("/");
 			history.go(0);
 		} catch (e) {
 			const error = e.response.data;
 			if (error.includes("password"))
-				setWorngCredentials("Weak password, minimum 7 digits");
+				setWrongCredentials("Weak password, minimum 7 digits");
 			else if (error.includes("Email is invalid"))
-				setWorngCredentials("Email is invalid");
+				setWrongCredentials("Email is invalid");
 			else if (error.includes("email_1 dup key"))
-				setWorngCredentials("Email already used");
+				setWrongCredentials("Email already used");
 		}
 	};
 
@@ -52,7 +51,7 @@ const LoginReal = () => {
 		<div>
 			<div
 				ref={signupBtn}
-				className={`container ${singupActive}`}
+				className={`container ${signupActive}`}
 				id="container"
 			>
 				<div className="form-container sign-up-container">
@@ -74,7 +73,7 @@ const LoginReal = () => {
 							placeholder="Password"
 						/>
 						<button onClick={register}>Sign Up</button>
-						<h4 className="wrong-register">{worngCredentials}</h4>
+						<h4 className="wrong-register">{wrongCredentials}</h4>
 					</form>
 				</div>
 				<div className="form-container sign-in-container">
@@ -91,7 +90,7 @@ const LoginReal = () => {
 							onChange={(e) => setPassword(e.currentTarget.value)}
 						/>
 						<button onClick={login}>Sign In</button>
-						<h4 className="wrong">{worngCredentials}</h4>
+						<h4 className="wrong">{wrongCredentials}</h4>
 					</form>
 				</div>
 				<div className="overlay-container">
@@ -103,8 +102,8 @@ const LoginReal = () => {
 								className="ghost"
 								id="signIn"
 								onClick={() => {
-									setSingupActive("");
-									setWorngCredentials("");
+									setSignupActive("");
+									setWrongCredentials("");
 								}}
 							>
 								Sign In
@@ -117,8 +116,8 @@ const LoginReal = () => {
 								className="ghost"
 								id="signUp"
 								onClick={() => {
-									setSingupActive("right-panel-active");
-									setWorngCredentials("");
+									setSignupActive("right-panel-active");
+									setWrongCredentials("");
 								}}
 							>
 								Sign Up
@@ -131,4 +130,4 @@ const LoginReal = () => {
 	);
 };
 
-export default LoginReal;
+export default Login;

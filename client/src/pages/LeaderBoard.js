@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import api from "../API/api";
-import "./css/leaderboard.css";
-const Leaderboard = () => {
+import "../styles/leaderBoard.css";
+
+const LeaderBoard = () => {
 	const [scoreData, setScoreData] = useState([]);
 	const [genre] = useState([
 		"rock classics",
@@ -70,4 +71,4 @@ const Leaderboard = () => {
 	);
 };
 
-export default Leaderboard;
+export default LeaderBoard;

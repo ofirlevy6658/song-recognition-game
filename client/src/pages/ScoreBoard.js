@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import api from "../API/api";
 import { useLocation, useHistory } from "react-router-dom";
-import "./css/scoreboard.css";
-const Scoreboard = ({ user }) => {
+import "../styles/scoreBoard.css";
+
+const ScoreBoard = ({ user }) => {
 	const location = useLocation();
 	const history = useHistory();
 
@@ -36,4 +37,4 @@ const Scoreboard = ({ user }) => {
 	);
 };
 
-export default Scoreboard;
+export default ScoreBoard;
