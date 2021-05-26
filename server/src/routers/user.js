@@ -1,6 +1,6 @@
 const express = require("express");
-const User = require("../models/user");
 const router = new express.Router();
+const User = require("../models/user");
 const auth = require("../middleware/auth");
 
 //create user
@@ -8,7 +8,7 @@ router.post("/api/users", async (req, res) => {
 	const user = new User(req.body);
 	try {
 		await user.save();
-		const token = await user.generateAuthToken();
+		const token = await user.generateAuthToken(); // login immediately after create user
 		res.status(201).send({ user, token });
 	} catch (e) {
 		res.status(400).send(e.message);
@@ -18,8 +18,8 @@ router.post("/api/users", async (req, res) => {
 //update score
 router.patch("/api/users", auth, async (req, res) => {
 	try {
-		const { id, score } = req.body;
-		user = await User.findById(id);
+		const user = req.user;
+		const { score } = req.body;
 		user.score = score;
 		user.save();
 		res.status(201).send("score update");
@@ -31,10 +31,11 @@ router.patch("/api/users", auth, async (req, res) => {
 // update best score
 router.patch("/api/bestscore", auth, async (req, res) => {
 	try {
-		const { id, genre, score } = req.body;
-		if (score > 50) return;
-		user = await User.findById(id);
-		bestScore = { ...user.bestScore };
+		const { genre, score } = req.body;
+		if (score > 50) return res.status(400).send("Invalid");
+		const user = req.user;
+		user.bestScore[genre] = score;
+		const bestScore = { ...user.bestScore };
 		bestScore[genre] = parseInt(score);
 		user.bestScore = bestScore;
 		user.save();
@@ -46,8 +47,8 @@ router.patch("/api/bestscore", auth, async (req, res) => {
 //change genre
 router.patch("/api/genre", auth, async (req, res) => {
 	try {
-		const { id, genre } = req.body;
-		user = await User.findById(id);
+		const user = req.user;
+		const { genre } = req.body;
 		user.genre = genre;
 		user.save();
 		res.status(201).send("genre update");
@@ -69,19 +70,20 @@ router.get("/api/leaderscore", async (req, res) => {
 			"timeless rock anthems",
 			"‎90s Israeli Rock",
 		];
-		users = await User.find({});
+		const users = await User.find({});
+		// take only the necessary data
 		const cleanUsers = users.map((el) => {
 			return { bestScore: el.bestScore, name: el.name };
 		});
-		constBestScore = [];
+		const BestScore = [];
+		// sort every genre by best score
 		for (let i of genres) {
 			cleanUsers.sort((a, b) => {
 				return a.bestScore[i] - b.bestScore[i];
 			});
-			constBestScore.push(cleanUsers.slice(cleanUsers.length - 5));
+			BestScore.push(cleanUsers.slice(cleanUsers.length - 5)); // push the best 5 of every genre into array
 		}
-
-		res.status(201).send(constBestScore);
+		res.status(201).send(BestScore);
 	} catch (e) {
 		res.status(400).send(e.message);
 	}
